@@ -1,3 +1,5 @@
+Вариант 40: Скошенное дерево
+Реализовать операции поиска, добавления, удаления для скошенного дерева
 # alg-dstruct
 Computer science course @ Applied Mathematics/SPBPU 2021-2022
 

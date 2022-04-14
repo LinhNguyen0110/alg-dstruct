@@ -8,12 +8,13 @@ typedef struct splay_tree
 	int key;
 	struct splay_tree* left, * right;
 } tree_t;
+tree_t* tree_splay(tree_t* tree, int value);
 tree_t* add_node(tree_t* tree, int value)
 {
-	if (!tree)
+	if (tree == NULL)
 	{
 		tree = (tree_t*)malloc(sizeof(tree_t));
-		if (!tree) {
+		if (tree== NULL) {
 			return NULL;
 		}
 		tree->key = value;
@@ -21,7 +22,9 @@ tree_t* add_node(tree_t* tree, int value)
 		tree->right = NULL;
 		return tree;
 	}
-
+	if(value == tree->key){
+		return tree;
+	}
 	if (value < tree->key)
 	{
 		tree->left = add_node(tree->left, value);
@@ -59,7 +62,7 @@ tree_t* tree_splay(tree_t* tree, int value)
 		return tree;
 	if (tree->key > value)
 	{
-		if (!tree->left)
+		if (tree->left == NULL)
 			return tree;
 
 		if (tree->left->key > value)
@@ -74,7 +77,7 @@ tree_t* tree_splay(tree_t* tree, int value)
 			if (tree->left->right)
 				tree->left = rotate_left(tree->left);
 		}
-		if (!tree->left)
+		if (tree->left == NULL)
 			return tree;
 		else
 			return rotate_right(tree);
@@ -128,7 +131,7 @@ tree_t* remove_node(tree_t* tree, int value)
 tree_t* find_node(tree_t* t, int key)
 {
 	tree_t* temp = NULL;
-	if (t == NULL)
+	if (t == NULL )
 		return NULL;
 	if (t->key == key)
 		return t;
@@ -173,7 +176,7 @@ int main()
 	char func;
 	int value;
 	tree_t* tree = NULL;
-	while (scanf("%c %i", &func, &value) > 0)
+	while (fscanf(stdin,"%c %i", &func, &value) > 0)
 	{
 		switch (func)
 		{
@@ -185,10 +188,17 @@ int main()
 			break;
 		case 'f':
 			tree = tree_splay(tree, value);
+			if(tree)
+			{
 			if (tree->key == value)
 				printf("yes\n");
 			else
 				printf("no\n");
+			}
+			else
+			{
+				printf("no\n");
+			}
 			break;
 
 		}
